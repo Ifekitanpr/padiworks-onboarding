@@ -1,45 +1,83 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
-import { AuthSidePanel } from "./auth-side-panel";
 
 type AuthShellProps = {
-  step?: number;
-  panelHeadline: string;
-  panelDescription?: string;
-  /** Pass `null` to explicitly hide the callout (vs. omitting it, which shows the default copy). */
-  panelCallout?: string | null;
-  /** Decorative panel graphic. Omit for the default board collage (signup/login). */
-  panelCollage?: ReactNode;
-  contentMaxWidth?: string;
   children: ReactNode;
+  verification?: boolean;
+  recovery?: boolean;
+  recoveryCode?: boolean;
+  reset?: boolean;
 };
 
-export function AuthShell({
-  step,
-  panelHeadline,
-  panelDescription,
-  panelCallout,
-  panelCollage,
-  contentMaxWidth = "max-w-[440px]",
-  children,
-}: AuthShellProps) {
+export function AuthShell({ children, verification = false, recovery = false, recoveryCode = false, reset = false }: AuthShellProps) {
   return (
-    <div className="flex min-h-screen w-full bg-white">
-      <div className="hidden aspect-[600/1024] max-h-screen w-[42%] max-w-[600px] shrink-0 self-center p-3 lg:block">
-        <AuthSidePanel
-          step={step}
-          headline={panelHeadline}
-          description={panelDescription}
-          calloutText={panelCallout}
-          collage={panelCollage}
-        />
+    <main className={`auth-shell${verification ? " auth-shell--verification" : ""}`}>
+      <aside className="auth-rail" aria-label="Padiworks introduction">
+        <div className="auth-art">
+          <div className="auth-art__glow" />
+          <div className="auth-art__vector"><img src="/assets/auth/panel-vector.svg" alt="" aria-hidden="true" /></div>
+          <header className="auth-art__header">
+            <img className="auth-art__logo" src="/assets/auth/logo-white.svg" alt="Padiworks" />
+            <button className="help-link" type="button"><img src="/assets/auth/help-circle.svg" alt="" />Use help</button>
+          </header>
+          {reset ? <ResetArtwork /> : recoveryCode ? <RecoveryCodeArtwork /> : recovery ? <RecoveryArtwork /> : verification ? <VerificationArtwork /> : <SignupArtwork />}
+        </div>
+      </aside>
+      <section className="auth-content">{children}</section>
+    </main>
+  );
+}
+
+function ResetArtwork() {
+  return <div className="verification-art reset-art"><h2>One last step <span aria-hidden>😀</span></h2><p>Now let&apos;s create a strong and memorable new password</p><div className="collage reset-collage" aria-hidden><img className="verification-collage__image" src="/assets/auth/reset-password-collage-exact.png" alt="" /></div></div>;
+}
+
+function RecoveryCodeArtwork() {
+  return <div className="verification-art recovery-code-art"><h2>Hi Patrick <span aria-hidden>👋</span></h2><p>Almost there! Just check for the reset instructions in your inbox.</p><div className="collage recovery-code-collage" aria-hidden><img className="verification-collage__image" src="/assets/auth/recovery-code-collage-exact.png" alt="" /></div></div>;
+}
+
+function RecoveryArtwork() {
+  return (
+    <div className="verification-art recovery-art">
+      <h2>You don&apos;t remember <span aria-hidden>🤔</span></h2>
+      <p>We&apos;ve got you! Let&apos;s reset it together.</p>
+      <div className="recovery-collage" aria-hidden>
+        <div className="recovery-card recovery-card--back"><span><img src="/assets/auth/recovery-card-strips.png" alt="" /></span></div>
+        <div className="recovery-card recovery-card--mid"><span><img src="/assets/auth/recovery-card-strips.png" alt="" /></span></div>
+        <div className="recovery-card recovery-card--main"><span><img src="/assets/auth/recovery-card-main.png" alt="" /></span></div>
+        <i className="recovery-avatar"><img className="recovery-avatar__lower" src="/assets/auth/recovery-avatar-lower.svg" alt="" /><img className="recovery-avatar__upper" src="/assets/auth/recovery-avatar-upper.svg" alt="" /><img className="recovery-avatar__mid" src="/assets/auth/recovery-avatar-mid.svg" alt="" /></i>
       </div>
-      <div className="lg:hidden absolute top-0 right-0 left-0 flex h-[72px] items-center justify-between bg-[linear-gradient(110deg,#321a69,#5a35a8,#3b82f6)] px-5 shadow-sm">
-        <img src="/images/auth/logo.svg" alt="Padiworks" className="h-6 w-[132px]" />
-        <div className="flex items-center gap-2 text-xs text-white/70"><img src="/images/auth/help-circle.svg" alt="" className="size-4"/>Use help</div>
+    </div>
+  );
+}
+
+function SignupArtwork() {
+  return (
+    <div className="signup-art">
+      <div className="signup-art__title">
+        <span className="step-mark"><img src="/assets/auth/step-decoration.svg" alt="" /><b>1</b></span>
+        <h2>AI-native Execution Intelligence Operating System for growing teams.</h2>
       </div>
-      <div className="flex flex-1 items-center justify-center px-6 pt-28 pb-12 sm:px-10 lg:py-16">
-        <div className={cn("w-full", contentMaxWidth)}>{children}</div>
+      <p className="signup-art__description"><span><img src="/assets/auth/bot-sparkle.svg" alt="" /></span> Enabling performance evidence through execution of strategy, powered by artificial intelligence, designed for growth companies.</p>
+      <div className="collage collage--signup" aria-hidden>
+        <div className="collage-card collage-card--a"><span className="collage-card__crop"><img src="/assets/auth/board-collage.png" alt="" /></span></div>
+        <div className="collage-card collage-card--b"><span className="collage-card__crop"><img src="/assets/auth/board-collage.png" alt="" /></span></div>
+        <div className="collage-card collage-card--c"><span className="collage-card__crop"><img src="/assets/auth/board-feature.png" alt="" /></span></div>
+        <span className="collage-arrow collage-arrow--a"><img src="/assets/auth/arrow-a.svg" alt="" /></span>
+        <span className="collage-arrow collage-arrow--b"><img src="/assets/auth/arrow-b.svg" alt="" /></span>
+        <span className="collage-arrow collage-arrow--c"><img src="/assets/auth/arrow-c.svg" alt="" /></span>
+        <i className="avatar avatar--a"><img src="/assets/auth/avatar-a.png" alt="" /></i><i className="avatar avatar--b"><img src="/assets/auth/avatar-b.png" alt="" /></i><i className="avatar avatar--c"><img src="/assets/auth/avatar-c.png" alt="" /></i>
+      </div>
+    </div>
+  );
+}
+
+function VerificationArtwork() {
+  return (
+    <div className="verification-art">
+      <h2>Hi Patrick <span aria-hidden>👋</span></h2>
+      <p>Almost there! Just verify your mail.</p>
+      <div className="collage collage--verification" aria-hidden>
+        <img className="verification-collage__image" src="/assets/auth/verification-collage-exact.png" alt="" />
       </div>
     </div>
   );

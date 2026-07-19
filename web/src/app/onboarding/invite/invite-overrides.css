@@ -1,0 +1,7 @@
+.goals-art > .invite-art__content { top: 308px; }
+.invite-form { gap: 25px; margin-top: 223px; }
+.invite-form footer { margin-top: 39px; }
+.invite-person--2 img,.invite-person--3 img,.invite-person--4 img { display:none; }
+.invite-person--2 { background:url('/assets/figma-onboarding/invite-person-3.jpg') center/cover; }
+.invite-person--3 { background:url('/assets/figma-onboarding/invite-person-4.jpg') center/cover; }
+.invite-person--4 { background:url('/assets/figma-onboarding/invite-person-5.jpg') center/cover; }

@@ -1,0 +1,6 @@
+import { SignupForm } from "../../../components/auth/signup-form";
+import { AuthShell } from "../../../components/auth/auth-shell";
+
+export default function PasswordSignupPage() {
+  return <AuthShell><SignupForm passwordMode /></AuthShell>;
+}

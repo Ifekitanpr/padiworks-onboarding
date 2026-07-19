@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Padiworks web
 
-## Getting Started
+Fresh Phase 1 implementation for the Padiworks Figma source.
 
-First, run the development server:
+## Routes
+
+- `/signup` — account creation, consent gating, registration success toast.
+- `/verify-email` — six-digit verification code entry and resend feedback.
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000/signup` at a 1440×1024 viewport for the initial Figma comparison.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Phase 1 visual acceptance checklist
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Split is 600px artwork / 840px form at a 1440px viewport.
+- Artwork outer/inner insets, form width, vertical positions, card crops, logo, icons, and arrow orientation match the Figma source.
+- Signup CTA correctly reflects disabled, enabled, submitting, and successful registration states.
+- Success toast is 404×64 and anchored at the documented upper-right position.
+- OTP grouping, focus, paste, backspace, action state, resend state, and verification artwork match the verification frame.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `../docs/design-context/phase-01-account-creation.md` for Figma node references and exact measurements.
